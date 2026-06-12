@@ -8,10 +8,10 @@ import {
 } from "@/components/reusables";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { FEATURES, PLACEHOLDERS, SUGGESTIONS } from "@/lib/data";
+import { FEATURES, PLACEHOLDERS, STEPS, SUGGESTIONS } from "@/lib/data";
 import { cn } from "@/lib/utils";
-import { SignInButton, useAuth } from "@clerk/nextjs";
-import { ArrowRight, Zap } from "lucide-react";
+import { PricingTable, SignInButton, useAuth } from "@clerk/nextjs";
+import { ArrowRight, ChevronRight, Zap } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -265,7 +265,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-
+      {/* evrerything you need */}
       <section className="px-4 pb-32">
         <div className="mx-auto mb-14 max-w-5xl text-center">
           <SectionLabel>Everything you need</SectionLabel>
@@ -289,6 +289,102 @@ export default function Home() {
           })}
         </div>
       </section>
+
+      {/* how it works */}
+
+      <section className="px-4 pb-32">
+        <div className="mx-auto mb-14 max-w-5xl text-center">
+          <SectionLabel>How it works</SectionLabel>
+          <SectionHeading gray="Four steps" blue="to a  working app" />
+        </div>
+
+        <div className="mx-auto max-w-3xl">
+          {STEPS.map((step, i) => (
+            <div key={step.number} className="flex gap-6">
+              <div className="flex flex-col items-center">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/4">
+                  <span className="font-mono text-xs font-semibold text-white/50">
+                    {step.number}
+                  </span>
+                </div>
+                {i < STEPS.length - 1 && (
+                  <div className="mt-2 h-full w-px bg-white/6" />
+                )}
+              </div>
+
+              <div className="pb-10 pt-1.5">
+                <p className="mb-1.5 text-sm font-semibold sm:text-base">
+                  {step.label}
+                </p>
+                <p className="text-sm leading-relaxed text-white/40">
+                  {step.desc}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* pricing */}
+
+      <section className="px-4 pb-32">
+        <div className="mx-auto mb-14 max-w-5xl text-center">
+          <SectionLabel>Simple pricing</SectionLabel>
+          <SectionHeading gray="Start free" blue="scale when ready" />
+
+          <p className="mx-auto mt-4 max-w-sm text-sm text-white/35">
+            No credit card required. Upgrade or downgrade anytime
+          </p>
+        </div>
+
+        <div className="mx-auto max-w-5xl">
+          <PricingTable
+            checkoutProps={{
+              appearance: {
+                elements: {
+                  drawerRoot: {
+                    zIndex: 2000,
+                  },
+                },
+              },
+            }}
+          />
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="relative mx-auto mb-32 max-w-5xl overflow-hidden rounded-2xl border border-white/8px-10 py-24 text-center">
+        <HoleBackground
+          strokeColor="rgba(255,255,255,0.05)"
+          className="absolute inset-0 h-full w-full"
+          style={{
+            maskImage:
+              "linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0.5) 50%, transparent 100%)",
+            WebkitMaskImage:
+              "linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0.5) 50%, transparent 100%)",
+          }}
+        />
+        <SectionHeading gray="Start building," blue="for free." />
+
+        <p className="mb-8 text-sm leading-relaxed text-white/40">
+          Get 10 free generations on signup. No credit card rerquired. <br />{" "}
+          Upgrade when you&apos;re ready.
+        </p>
+
+        <SignInButton mode="modal">
+          <Button
+            size="lg"
+            className="relative h-11 rounded-full bg-white px-8"
+          >
+            Get Started Free
+            <ChevronRight className="h-4 w-4" />
+          </Button>
+        </SignInButton>
+      </section>
+
+      <footer className="relative z-10 border-t border-white/7 py-12 mx-auto px-6 flex flex-wrap items-center justify-center text-stone-400">
+        Made with ❤️ by VoneDigital
+      </footer>
     </main>
   );
 }
